@@ -1,4 +1,5 @@
-# remove local branches not on remote
+**remove local branches not on remote**
 
+```
 > git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
-
+```
