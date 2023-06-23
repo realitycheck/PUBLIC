@@ -6,3 +6,7 @@ git rev-parse --short HEAD
 
 # nearest tag, commit number, short commit hash: 1.0.0-1123-g9411d00
 git describe --tags --always 
+
+# for makefile
+# using branch name:
+# TAG=$(subst /,-,$(shell git rev-parse --abbrev-ref HEAD)) 
