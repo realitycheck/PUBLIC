@@ -5,4 +5,4 @@ git log -1 --format=%H
 git rev-parse --short HEAD  
 
 # nearest tag, commit number, short commit hash: 1.0.0-1123-g9411d00
-shell git describe --tags --always 
+git describe --tags --always 
