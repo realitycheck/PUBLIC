@@ -1,4 +1,4 @@
-# long hash: 94cd6ca67c801c8b41f0b103be0b19906b411d00
+# long hash: 9411d00cd6ca67c801c8b41f0b103be0b19906b4
 git log -1 --format=%H
 
 # short hash: 9411d00
