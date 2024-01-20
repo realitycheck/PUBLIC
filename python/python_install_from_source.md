@@ -12,4 +12,6 @@ Build from source commands:
 make -j8
 ```
 
+Tip: Try removing previous build with `make clean` when rebuilding with configure options changed and got errors.
+
 See: https://docs.python.org/3/using/configure.html
