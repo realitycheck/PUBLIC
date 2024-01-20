@@ -2,19 +2,19 @@ $ sudo ln -s /usr/local/lib64/python3.7/lib-dynload/ /usr/local/lib/python3.7/li
 
 is always required when building python with make altinstall
 
+---
+
+Also for --enable-shared shared *.so from /usr/local/lib64 must be copied to /usr/local/lib
+
+e.g.
+$ sudo ln -s /usr/local/lib64/libpython3.11.so.1.0 /usr/local/lib/libpython3.11.so.1.0
 
 ---
 
 Build from source commands:
 
 ```
-Non-shared:
-
-./configure --enable-optimizations --disable-test-modules
-
-Shared:
-
-./configure  --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --disable-test-modules
+./configure --enable-optimizations --disable-test-modules --enable-shared 
 
 Then:
 make clean
