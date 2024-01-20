@@ -8,7 +8,16 @@ is always required when building python with make altinstall
 Build from source commands:
 
 ```
-./configure --enable-optimizations --enable-shared --disable-test-modules
+Non-shared:
+
+./configure --enable-optimizations --disable-test-modules
+
+Shared:
+
+./configure  --prefix=/usr/local --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --disable-test-modules
+
+Then:
+make clean
 make -j8
 ```
 
