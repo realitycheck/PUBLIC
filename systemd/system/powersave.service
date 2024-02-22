@@ -1,0 +1,16 @@
+# Installation:
+# 1. Copy this Unit to /etc/systemd/system/
+# 2. Run: systemctl enable powersave
+[Unit]
+Description=Power Saving Service for CPU(cpupower) and GPU(nvidia-smi)
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/cpupower -c all set -b 14
+ExecStart=/usr/bin/nvidia-smi -pl 15
+ExecStart=/usr/bin/nvidia-smi -lgc 600,900
+ExecStop=/usr/bin/cpupower -c all set -b 4
+ExecStop=/usr/bin/nvidia-smi -pl 35
+ExecStop=/usr/bin/nvidia-smi -rgc
+[Install]
+WantedBy=multi-user.target
