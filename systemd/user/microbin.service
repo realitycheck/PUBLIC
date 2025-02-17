@@ -1,7 +1,9 @@
 # drop a systemd service in ~/.config/systemd/user
+# mkdir -p ~/.microbin
 # systemctl --user enable microbin.service
 # systemctl --user daemon-reload
 # systemctl --user start microbin.service
+# doc: https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#Specifiers
 [Unit]
 Description=Run microbin server
 [Service]
