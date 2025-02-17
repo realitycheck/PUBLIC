@@ -1,0 +1,37 @@
+# microbin@v2.0.4
+# DOCKER_BUILDKIT=1 docker build -f Dockerfile.arm64 -o . .
+FROM rust:bookworm as build
+
+ENV GNU_HOST=aarch64-linux-gnu
+ENV CC=$GNU_HOST-gcc
+ENV PKG_CONFIG_PATH=/usr/lib/$GNU_HOST/pkgconfig
+
+ENV GOARCH=arm64
+ENV GOOS=linux
+ENV CGO_ENABLED=1
+
+ENV CARGO_BUILD_RUSTFLAGS=-Clinker=$GNU_HOST-gcc
+ENV CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu
+RUN rustup target add $CARGO_BUILD_TARGET
+
+RUN dpkg --add-architecture $GOARCH
+
+RUN \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && \
+    apt-get --no-install-recommends install -y \
+        gcc-$GNU_HOST \
+        libc6-dev-$GOARCH-cross
+
+WORKDIR /app
+ADD . .
+
+RUN --mount=type=cache,target=/app/target/,sharing=private \
+    --mount=type=cache,target=/usr/local/cargo/git/db \
+    --mount=type=cache,target=/usr/local/cargo/registry/ \
+    cargo build -r --bin microbin && mv target/$CARGO_BUILD_TARGET/release/microbin microbin
+
+FROM scratch
+
+COPY --from=build /app/microbin /
