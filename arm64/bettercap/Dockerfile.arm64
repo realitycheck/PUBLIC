@@ -1,0 +1,36 @@
+# bettercap@v2.41.0
+# DOCKER_BUILDKIT=1 docker build -f Dockerfile.arm64 -o . .
+FROM golang:1.24-bookworm as build
+
+ENV GNU_HOST=aarch64-linux-gnu
+ENV CC=$GNU_HOST-gcc
+ENV PKG_CONFIG_PATH=/usr/lib/$GNU_HOST/pkgconfig
+
+ENV GOARCH=arm64
+ENV GOOS=linux
+ENV CGO_ENABLED=1
+
+RUN dpkg --add-architecture $GOARCH
+
+RUN \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && \
+    apt-get --no-install-recommends install -y \
+        gcc-$GNU_HOST \
+        libc6-dev-$GOARCH-cross \
+        libpcap-dev:$GOARCH \
+        libnetfilter-queue-dev:$GOARCH \
+        libusb-1.0-0-dev:$GOARCH
+
+WORKDIR /app
+ADD . .
+
+RUN \
+    --mount=type=cache,target=/go/pkg/mod \
+    go build -o bettercap .
+
+FROM scratch
+
+COPY --from=build /app/bettercap /
+
