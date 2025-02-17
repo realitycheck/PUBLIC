@@ -1,0 +1,10 @@
+# drop a systemd service in ~/.config/systemd/user
+# systemctl --user enable microbin.service
+# systemctl --user daemon-reload
+# systemctl --user start microbin.service
+[Unit]
+Description=Run microbin server
+[Service]
+ExecStart=%h/.cargo/bin/microbin -p1055 --hide-footer --disable-telemetry --disable-update-checking --default-expiry=never --qr --data-dir %h/.microbin
+[Install]
+WantedBy=default.target
