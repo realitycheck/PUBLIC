@@ -24,7 +24,7 @@ Then, to rebase feature_branch2 onto commits from master, do
 > git rebase --onto master @~4
 ```
 
-Where *4* is a number of commits on feature_branch2 to rebase
+Where *4* is the current number of commits in feature_branch2 to rebase
 
 
 
