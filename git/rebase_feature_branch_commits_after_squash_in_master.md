@@ -14,7 +14,7 @@ Then, after
 New branch from first feature branch
 > git co -b feature_branch2 (from feature_branch)
 
-Eventually, while doing work in feature_branch2, the feature_branch is squashed to master
+Eventually, while doing work in feature_branch2, the feature_branch's PR is squashed to master
 
 Then, to rebase feature_branch2 onto commits from master, do
 ```
