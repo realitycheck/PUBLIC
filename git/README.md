@@ -1,5 +1,12 @@
 # HOW-TOs
 
+## Solve rebase conflicts when there is a file that differs but not relevant so it can be replaced or ignored entirely
+
+> git rebase <master>
+> git co <--ours|--theirs> <file>
+> git add <file>
+> git rebase --continue
+
 ## Search text in file history
 
 ### Find when a string was added or removed in a single file
